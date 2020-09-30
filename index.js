@@ -6,11 +6,10 @@ var util = require('util')
 
 function parse (args, opts) {
   if (!opts) opts = {}
-  // allow a string argument to be passed in rather
-  // than an argv array.
+
   args = tokenizeArgString(args)
 
-  // aliases might have transitive relationships, normalize this.
+
   var aliases = combineAliases(opts.alias || {})
   var configuration = Object.assign({
     'short-option-groups': true,
@@ -175,7 +174,7 @@ function parse (args, opts) {
       key = arg.match(negatedBoolean)[1]
       setArg(key, false)
 
-    // -- seperated by space.
+
     } else if (arg.match(/^--.+/) || (
       !configuration['short-option-groups'] && arg.match(/^-[^-]+/)
     )) {
@@ -442,7 +441,7 @@ function parse (args, opts) {
       })
     }
 
-    // Set normalize getter and setter when key is in 'normalize' but isn't an array
+  
     if (checkAllAliases(key, flags.normalize) && !checkAllAliases(key, flags.arrays)) {
       var keys = [key].concat(flags.aliases[key] || [])
       keys.forEach(function (key) {
@@ -488,7 +487,7 @@ function parse (args, opts) {
       value = increment
     }
 
-    // Set normalized value when key is in 'normalize' and in 'arrays'
+  
     if (checkAllAliases(key, flags.normalize) && checkAllAliases(key, flags.arrays)) {
       if (Array.isArray(val)) value = val.map(path.normalize)
       else value = path.normalize(val)
